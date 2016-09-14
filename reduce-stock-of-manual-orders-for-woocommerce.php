@@ -2,10 +2,10 @@
 /**
  * Plugin Name: Reduce stock of manual orders for WooCommerce
  * Plugin URI: https://github.com/claudiosmweb/reduce-stock-of-manual-orders-for-woocommerce
- * Description: Auto reduces/increases stock levels of orders saved on the admin interface.
+ * Description: Automatically reduce or increase stock levels of manual orders in WooCommerce.
  * Author: Claudio Sanches
  * Author URI: https://claudiosmweb.com/
- * Version: 0.0.1
+ * Version: 1.0.0
  * License: GPLv2 or later
  * Text Domain: reduce-stock-of-manual-orders-for-woocommerce
  * Domain Path: /languages/
@@ -29,7 +29,7 @@ if ( ! class_exists( 'RSMO_WooCommerce' ) ) :
 		 *
 		 * @var string
 		 */
-		const VERSION = '0.0.1';
+		const VERSION = '1.0.0';
 
 		/**
 		 * Instance of this class.
