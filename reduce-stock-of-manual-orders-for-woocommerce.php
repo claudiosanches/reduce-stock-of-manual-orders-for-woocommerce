@@ -94,6 +94,52 @@ if ( ! class_exists( 'RSMO_WooCommerce' ) ) :
 		}
 
 		/**
+		 * Increase order stock.
+		 *
+		 * @param int $order_id Order ID.
+		 */
+		protected function increase_order_stock( $order_id ) {
+			$order = wc_get_order( $order_id );
+
+			if ( 'yes' === get_option( 'woocommerce_manage_stock' ) && $order && 0 < count( $order->get_items() ) ) {
+				foreach ( $order->get_items() as $item ) {
+					// Support for WooCommerce 2.7.
+					if ( is_callable( array( $item, 'get_id' ) ) ) {
+						$product_id = $item->get_id();
+					} else {
+						$product_id = $item['product_id'];
+					}
+
+					if ( 0 < $product_id ) {
+						$product = $order->get_product_from_item( $item );
+
+						if ( $product && $product->exists() && $product->managing_stock() ) {
+							$old_stock = $product->stock;
+
+							// Support for WooCommerce 2.7.
+							if ( is_callable( array( $item, 'get_quantity' ) ) ) {
+								$quantity = apply_filters( 'woocommerce_order_item_quantity', $item->get_quantity(), $order, $item );
+							} else {
+								$quantity = apply_filters( 'woocommerce_order_item_quantity', $item['qty'], $order, $item );
+							}
+
+							$new_stock = $product->increase_stock( $quantity );
+							$item_name = $product->get_sku() ? $product->get_sku() : $item['product_id'];
+
+							if ( ! empty( $item['variation_id'] ) ) {
+								$order->add_order_note( sprintf( __( 'Item %1$s variation #%2$s stock increased from %3$s to %4$s.', 'reduce-stock-of-manual-orders-for-woocommerce' ), $item_name, $item['variation_id'], $old_stock, $new_stock ) );
+							} else {
+								$order->add_order_note( sprintf( __( 'Item %1$s stock increased from %2$s to %3$s.', 'reduce-stock-of-manual-orders-for-woocommerce' ), $item_name, $old_stock, $new_stock ) );
+							}
+
+							delete_post_meta( $order_id, '_order_stock_reduced' );
+						}
+					}
+				}
+			}
+		}
+
+		/**
 		 * Check if can reduce stock.
 		 *
 		 * @param int    $order_id Order ID.
@@ -101,6 +147,16 @@ if ( ! class_exists( 'RSMO_WooCommerce' ) ) :
 		 */
 		protected function can_reduce_stock( $order_id, $status ) {
 			return in_array( $status, array( 'wc-processing', 'wc-completed' ), true ) && '1' !== get_post_meta( $order_id, '_order_stock_reduced', true );
+		}
+
+		/**
+		 * Check if can increase stock.
+		 *
+		 * @param int    $order_id Order ID.
+		 * @param string $status Order status.
+		 */
+		protected function can_increase_stock( $order_id, $status ) {
+			return 'wc-cancelled' === $status && '1' === get_post_meta( $order_id, '_order_stock_reduced', true );
 		}
 
 		/**
@@ -113,6 +169,8 @@ if ( ! class_exists( 'RSMO_WooCommerce' ) ) :
 
 			if ( $this->can_reduce_stock( $order_id, $status ) ) {
 				$this->reduce_order_stock( $order_id );
+			} elseif ( $this->can_increase_stock( $order_id, $status ) ) {
+				$this->increase_order_stock( $order_id );
 			}
 		}
 
