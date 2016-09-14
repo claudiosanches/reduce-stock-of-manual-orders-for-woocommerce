@@ -49,7 +49,10 @@ if ( ! class_exists( 'RSMO_WooCommerce' ) ) :
 			add_filter( 'woocommerce_can_reduce_order_stock', '__return_true', 999 );
 
 			// Reduce or increase order stock when changing the order status on the admin screen.
-			add_action( 'woocommerce_process_shop_order_meta', array( $this, 'admin_reduce_or_increase_order_stock' ), 45 );
+			add_action( 'woocommerce_process_shop_order_meta', array( $this, 'admin_manage_stock' ), 45 );
+
+			// Allow reduce or increase stock using bulk or the actions buttons on the order list screen.
+			add_action( 'woocommerce_order_edit_status', array( $this, 'admin_bulk_manage_stock' ), 20, 2 );
 		}
 
 		/**
@@ -91,14 +94,36 @@ if ( ! class_exists( 'RSMO_WooCommerce' ) ) :
 		}
 
 		/**
+		 * Check if can reduce stock.
+		 *
+		 * @param int    $order_id Order ID.
+		 * @param string $status Order status.
+		 */
+		protected function can_reduce_stock( $order_id, $status ) {
+			return in_array( $status, array( 'wc-processing', 'wc-completed' ), true ) && '1' !== get_post_meta( $order_id, '_order_stock_reduced', true );
+		}
+
+		/**
 		 * Reduce or increase order stock in the admin screen.
 		 *
 		 * @param int $order_id Order ID.
 		 */
-		public function admin_reduce_or_increase_order_stock( $order_id ) {
+		public function admin_manage_stock( $order_id ) {
 			$status = filter_input( INPUT_POST, 'order_status' );
 
-			if ( in_array( $status, array( 'wc-processing', 'wc-completed' ), true ) && '1' !== get_post_meta( $order_id, '_order_stock_reduced', true ) ) {
+			if ( $this->can_reduce_stock( $order_id, $status ) ) {
+				$this->reduce_order_stock( $order_id );
+			}
+		}
+
+		/**
+		 * Reduce or increase order stock using bulk or action buttons on the orders list screen.
+		 *
+		 * @param int    $order_id Order ID.
+		 * @param string $status Order status.
+		 */
+		public function admin_bulk_manage_stock( $order_id, $status ) {
+			if ( $this->can_reduce_stock( $order_id, $status ) ) {
 				$this->reduce_order_stock( $order_id );
 			}
 		}
