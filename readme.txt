@@ -1,6 +1,6 @@
 === Reduce stock of manual orders for WooCommerce ===
 Contributors: claudiosanches
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Y8HP99ZJ5Z59L
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RBVENSVSKY7JC
 Tags: woocommerce, reduce, increase, stock
 Requires at least: 4.0
 Tested up to: 4.6
