@@ -62,8 +62,6 @@ module.exports = function( grunt ) {
 	// Load tasks
 	grunt.loadNpmTasks( 'grunt-checktextdomain' );
 	grunt.loadNpmTasks( 'grunt-wp-i18n' );
-	grunt.loadNpmTasks( 'grunt-rsync' );
-	grunt.loadNpmTasks( 'grunt-shell' );
 	grunt.loadNpmTasks( 'grunt-wp-readme-to-markdown' );
 
 	// Register tasks

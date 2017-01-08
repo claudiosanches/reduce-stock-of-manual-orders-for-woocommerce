@@ -1,14 +1,28 @@
 <?php
 /**
  * Plugin Name: Reduce stock of manual orders for WooCommerce
- * Plugin URI: https://github.com/claudiosmweb/reduce-stock-of-manual-orders-for-woocommerce
+ * Plugin URI:  https://github.com/claudiosanches/reduce-stock-of-manual-orders-for-woocommerce
  * Description: Automatically reduce or increase stock levels of manual orders in WooCommerce.
- * Author: Claudio Sanches
- * Author URI: https://claudiosmweb.com/
- * Version: 1.0.0
- * License: GPLv2 or later
+ * Author:      Claudio Sanches
+ * Author URI:  https://claudiosmweb.com
+ * Version:     1.0.1
+ * License:     GPLv2 or later
  * Text Domain: reduce-stock-of-manual-orders-for-woocommerce
- * Domain Path: /languages/
+ * Domain Path: /languages
+ *
+ * Reduce stock of manual orders for WooCommerce is free software:
+ * you can redistribute it and/or modify it under the terms of
+ * the GNU General Public License as published by the Free Software Foundation,
+ * either version 2 of the License, or any later version.
+ *
+ * Reduce stock of manual orders for WooCommerce is distributed in the hope
+ * that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Reduce stock of manual orders for WooCommerce. If not, see
+ * <https://www.gnu.org/licenses/gpl-2.0.txt>.
  *
  * @package RSMO_WooCommerce
  */
@@ -29,7 +43,7 @@ if ( ! class_exists( 'RSMO_WooCommerce' ) ) :
 		 *
 		 * @var string
 		 */
-		const VERSION = '1.0.0';
+		const VERSION = '1.0.1';
 
 		/**
 		 * Instance of this class.

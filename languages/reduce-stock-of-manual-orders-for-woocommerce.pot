@@ -1,23 +1,25 @@
-# Copyright (C) 2016 Reduce stock of manual orders for WooCommerce
-# This file is distributed under the same license as the Reduce stock of manual orders for WooCommerce package.
+# Copyright (C) 2017 Claudio Sanches
+# This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Reduce stock of manual orders for WooCommerce 1.0.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/reduce-stock-of-"
-"manual-orders-for-woocommerce\n"
-"POT-Creation-Date: 2016-09-14 19:27:59+00:00\n"
+"Project-Id-Version: Reduce stock of manual orders for WooCommerce 1.0.1\n"
+"Report-Msgid-Bugs-To: "
+"https://wordpress.org/support/plugin/reduce-stock-of-manual-orders-for-"
+"woocommerce\n"
+"POT-Creation-Date: 2017-01-08 18:17:56+00:00\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2016-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"X-Generator: grunt-wp-i18n 0.5.4\n"
 
-#: reduce-stock-of-manual-orders-for-woocommerce.php:130
+#: reduce-stock-of-manual-orders-for-woocommerce.php:155
 msgid "Item %1$s variation #%2$s stock increased from %3$s to %4$s."
 msgstr ""
 
-#: reduce-stock-of-manual-orders-for-woocommerce.php:132
+#: reduce-stock-of-manual-orders-for-woocommerce.php:157
 msgid "Item %1$s stock increased from %2$s to %3$s."
 msgstr ""
 
@@ -27,7 +29,8 @@ msgstr ""
 
 #. Plugin URI of the plugin/theme
 msgid ""
-"https://github.com/claudiosmweb/reduce-stock-of-manual-orders-for-woocommerce"
+"https://github.com/claudiosanches/reduce-stock-of-manual-orders-for-"
+"woocommerce"
 msgstr ""
 
 #. Description of the plugin/theme
@@ -41,5 +44,5 @@ msgid "Claudio Sanches"
 msgstr ""
 
 #. Author URI of the plugin/theme
-msgid "https://claudiosmweb.com/"
+msgid "https://claudiosmweb.com"
 msgstr ""
