@@ -159,9 +159,10 @@ if ( ! class_exists( 'RSMO_WooCommerce' ) ) :
 		 * @return bool
 		 */
 		protected function can_reduce_stock( $order_id, $status ) {
-			$status = $this->normalize_order_status( $status );
+			$status   = $this->normalize_order_status( $status );
+			$statuses = apply_filters( 'rsmo_wc_reduce_stock_statuses', array( 'processing', 'completed' ) );
 
-			return in_array( $status, array( 'processing', 'completed' ), true ) && '1' !== get_post_meta( $order_id, '_order_stock_reduced', true );
+			return in_array( $status, $statuses, true ) && '1' !== get_post_meta( $order_id, '_order_stock_reduced', true );
 		}
 
 		/**
@@ -173,9 +174,10 @@ if ( ! class_exists( 'RSMO_WooCommerce' ) ) :
 		 * @return bool
 		 */
 		protected function can_increase_stock( $order_id, $status ) {
-			$status = $this->normalize_order_status( $status );
+			$status   = $this->normalize_order_status( $status );
+			$statuses = apply_filters( 'rsmo_wc_increase_stock_statuses', array( 'cancelled' ) );
 
-			return 'cancelled' === $status && '1' === get_post_meta( $order_id, '_order_stock_reduced', true );
+			return in_array( $status, $statuses, true ) && '1' === get_post_meta( $order_id, '_order_stock_reduced', true );
 		}
 
 		/**
