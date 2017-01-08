@@ -77,6 +77,17 @@ if ( ! class_exists( 'RSMO_WooCommerce' ) ) :
 		}
 
 		/**
+		 * Nornalize order status.
+		 *
+		 * @param  string $status Order status.
+		 *
+		 * @return string
+		 */
+		protected function normalize_order_status( $status ) {
+			return $status = 'wc-' === substr( $status, 0, 3 ) ? substr( $status, 3 ) : $status;
+		}
+
+		/**
 		 * Reduce order stock.
 		 *
 		 * @param int $order_id Order ID.
@@ -144,9 +155,13 @@ if ( ! class_exists( 'RSMO_WooCommerce' ) ) :
 		 *
 		 * @param int    $order_id Order ID.
 		 * @param string $status Order status.
+		 *
+		 * @return bool
 		 */
 		protected function can_reduce_stock( $order_id, $status ) {
-			return in_array( $status, array( 'wc-processing', 'wc-completed' ), true ) && '1' !== get_post_meta( $order_id, '_order_stock_reduced', true );
+			$status = $this->normalize_order_status( $status );
+
+			return in_array( $status, array( 'processing', 'completed' ), true ) && '1' !== get_post_meta( $order_id, '_order_stock_reduced', true );
 		}
 
 		/**
@@ -154,9 +169,13 @@ if ( ! class_exists( 'RSMO_WooCommerce' ) ) :
 		 *
 		 * @param int    $order_id Order ID.
 		 * @param string $status Order status.
+		 *
+		 * @return bool
 		 */
 		protected function can_increase_stock( $order_id, $status ) {
-			return 'wc-cancelled' === $status && '1' === get_post_meta( $order_id, '_order_stock_reduced', true );
+			$status = $this->normalize_order_status( $status );
+
+			return 'cancelled' === $status && '1' === get_post_meta( $order_id, '_order_stock_reduced', true );
 		}
 
 		/**
