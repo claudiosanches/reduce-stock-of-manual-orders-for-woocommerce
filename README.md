@@ -20,7 +20,7 @@ Automatically increase stock levels when:
 
 - Order status is changed to *Canceled* in order screen or using the bulk actions on orders list screen.
 
-Note that this plugin does not require any kind of configuration, just install and new words made in the admin screen will start update the stock levels while you change the status.
+Note that this plugin does not require any kind of configuration, just install and start update the orders statuses in the admin screen to update the stock levels too.
 
 #### Contribute ####
 
@@ -54,5 +54,5 @@ Note that is not necessary any kind of configuration.
 
 ### 1.0.1 ###
 
-- Fixed how reduce order when using the order quick action buttons.
+- Fixed how reduce stock levels when using the order quick action buttons.
 - Introduced the `rsmo_wc_reduce_stock_statuses` and `rsmo_wc_increase_stock_statuses` filters.
