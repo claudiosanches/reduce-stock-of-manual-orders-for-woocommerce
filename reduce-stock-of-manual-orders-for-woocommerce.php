@@ -5,7 +5,7 @@
  * Description:          Automatically reduce or increase stock levels of manual orders in WooCommerce.
  * Author:               Claudio Sanches
  * Author URI:           https://claudiosanches.com
- * Version:              1.0.1
+ * Version:              2.0.0
  * License:              GPLv3
  * Text Domain:          reduce-stock-of-manual-orders-for-woocommerce
  * Domain Path:          /languages
@@ -31,7 +31,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'RSMOW_VERSION', '1.0.2' );
+define( 'RSMOW_VERSION', '2.0.0' );
 define( 'RSMOW_PLUGIN_FILE', __FILE__ );
 
 if ( ! class_exists( 'RSMO_WooCommerce' ) ) {

@@ -1,7 +1,7 @@
 {
   "name": "reduce-stock-of-manual-orders-for-woocommerce",
   "description": "Automatically reduce or increase stock levels of manual orders in WooCommerce.",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/claudiosanches/reduce-stock-of-manual-orders-for-woocommerce.git"
