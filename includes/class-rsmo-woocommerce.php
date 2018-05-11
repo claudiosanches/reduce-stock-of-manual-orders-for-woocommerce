@@ -76,18 +76,15 @@ class RSMO_WooCommerce {
 
 					if ( $product && $product->exists() && $product->managing_stock() ) {
 						$old_stock = $product->get_stock_quantity();
-
-						$quantity = apply_filters( 'woocommerce_order_item_quantity', $item->get_quantity(), $order, $item );
-
-						$new_stock = wc_update_product_stock( $quantity );
-						$item_name = $product->get_sku() ? $product->get_sku() : $item['product_id'];
+						$quantity  = apply_filters( 'woocommerce_order_item_quantity', $item->get_quantity(), $order, $item );
+						$new_stock = wc_update_product_stock( $product, $quantity, 'increase' );
 
 						if ( ! empty( $item['variation_id'] ) ) {
 							/* translators: 1: product name 2: variation ID 3: old stock level 4: new stock level */
-							$order->add_order_note( sprintf( __( 'Item %1$s variation #%2$s stock increased from %3$s to %4$s.', 'reduce-stock-of-manual-orders-for-woocommerce' ), $item_name, $item['variation_id'], $old_stock, $new_stock ) );
+							$order->add_order_note( sprintf( __( 'Item %1$s variation #%2$s stock increased from %3$s to %4$s.', 'reduce-stock-of-manual-orders-for-woocommerce' ), $product->get_formatted_name(), $item['variation_id'], $old_stock, $new_stock ) );
 						} else {
 							/* translators: 1: product name 2: old stock level 3: new stock level */
-							$order->add_order_note( sprintf( __( 'Item %1$s stock increased from %2$s to %3$s.', 'reduce-stock-of-manual-orders-for-woocommerce' ), $item_name, $old_stock, $new_stock ) );
+							$order->add_order_note( sprintf( __( 'Item %1$s stock increased from %2$s to %3$s.', 'reduce-stock-of-manual-orders-for-woocommerce' ), $product->get_formatted_name(), $old_stock, $new_stock ) );
 						}
 
 						$order->get_data_store()->set_stock_reduced( $order_id, false );
