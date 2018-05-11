@@ -53,15 +53,10 @@ class RSMO_WooCommerce {
 	 * @param int $order_id Order ID.
 	 */
 	protected static function reduce_order_stock( $order_id ) {
-		// Support for WooCommerce 2.7.
-		if ( function_exists( 'wc_reduce_stock_levels' ) ) {
-			wc_reduce_stock_levels( $order_id );
-		} else {
-			$order = wc_get_order( $order_id );
-			$order->reduce_order_stock();
-		}
+		wc_reduce_stock_levels( $order_id );
 
-		add_post_meta( $order_id, '_order_stock_reduced', wc_bool_to_string( true ), true );
+		$data_store = WC_Data_Store::load( 'order' );
+		$data_store->set_stock_reduced( $order_id, true );
 	}
 
 	/**
@@ -74,27 +69,17 @@ class RSMO_WooCommerce {
 
 		if ( 'yes' === get_option( 'woocommerce_manage_stock' ) && $order && 0 < count( $order->get_items() ) ) {
 			foreach ( $order->get_items() as $item ) {
-				// Support for WooCommerce 2.7.
-				if ( is_callable( array( $item, 'get_id' ) ) ) {
-					$product_id = $item->get_id();
-				} else {
-					$product_id = $item['product_id'];
-				}
+				$product_id = $item->get_id();
 
 				if ( 0 < $product_id ) {
 					$product = $order->get_product_from_item( $item );
 
 					if ( $product && $product->exists() && $product->managing_stock() ) {
-						$old_stock = $product->stock;
+						$old_stock = $product->get_stock_quantity();
 
-						// Support for WooCommerce 2.7.
-						if ( is_callable( array( $item, 'get_quantity' ) ) ) {
-							$quantity = apply_filters( 'woocommerce_order_item_quantity', $item->get_quantity(), $order, $item );
-						} else {
-							$quantity = apply_filters( 'woocommerce_order_item_quantity', $item['qty'], $order, $item );
-						}
+						$quantity = apply_filters( 'woocommerce_order_item_quantity', $item->get_quantity(), $order, $item );
 
-						$new_stock = $product->increase_stock( $quantity );
+						$new_stock = wc_update_product_stock( $quantity );
 						$item_name = $product->get_sku() ? $product->get_sku() : $item['product_id'];
 
 						if ( ! empty( $item['variation_id'] ) ) {
@@ -105,7 +90,7 @@ class RSMO_WooCommerce {
 							$order->add_order_note( sprintf( __( 'Item %1$s stock increased from %2$s to %3$s.', 'reduce-stock-of-manual-orders-for-woocommerce' ), $item_name, $old_stock, $new_stock ) );
 						}
 
-						delete_post_meta( $order_id, '_order_stock_reduced' );
+						$order->get_data_store()->set_stock_reduced( $order_id, false );
 					}
 				}
 			}
