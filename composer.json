@@ -1,0 +1,48 @@
+{
+	"name": "claudiosanches/reduce-stock-of-manual-orders-for-woocommerce",
+	"description": "Adds Correios shipping methods to your WooCommerce store.",
+	"homepage": "https://github.com/claudiosanches/reduce-stock-of-manual-orders-for-woocommerce",
+	"type": "wordpress-plugin",
+	"license": "GPL-3.0+",
+	"authors": [
+		{
+			"name": "Claudio Sanches",
+			"homepage": "https://claudiosanches.com",
+			"role": "Developer"
+		}
+	],
+	"support": {
+		"forum": "https://wordpress.org/support/plugin/reduce-stock-of-manual-orders-for-woocommerce",
+		"issues": "https://github.com/claudiosanches/reduce-stock-of-manual-orders-for-woocommerce/issues/",
+		"source": "https://github.com/claudiosanches/reduce-stock-of-manual-orders-for-woocommerce"
+	},
+	"require": {
+		"claudiosanches/wp-git-hooks": "^1.3.1"
+	},
+	"scripts": {
+		"pre-update-cmd": [
+			"ClaudioSanches\\WpGitHooks\\Hooks::preHooks"
+		],
+		"pre-install-cmd": [
+			"@pre-update-cmd"
+		],
+		"post-install-cmd": [
+			"ClaudioSanches\\WpGitHooks\\Hooks::postHooks"
+		],
+		"post-update-cmd": [
+			"@post-install-cmd"
+		],
+		"phpcs": [
+			"phpcs -s -p"
+		],
+		"phpcbf": [
+			"phpcbf -p"
+		]
+	},
+	"extra": {
+		"scripts-description": {
+			"phpcs": "Analyze code against the WordPress coding standards with PHP_CodeSniffer",
+			"phpcbf": "Fix coding standards warnings/errors automatically with PHP Code Beautifier"
+		}
+	}
+}
